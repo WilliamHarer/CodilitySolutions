@@ -1,0 +1,20 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A):
+    # Implement your solution here
+    # solution seems straightforward, create a map of [A[i]:Occurences]
+    # if a key exists at the end which has no match IE: [A[i]:1]
+    # further inspection of the problem space is not just that something occurs once,
+    # but an odd number of times, so we really want [A[i]:x%2 such that x!=0]
+    # return the value of that key
+    OccurenceMap={}
+    for num in A:
+        if num in OccurenceMap:
+            OccurenceMap[num]=OccurenceMap[num]+1
+        else:
+            OccurenceMap[num]=1
+    for key in OccurenceMap:
+        if OccurenceMap[key]%2==1:
+            return key
+    pass
