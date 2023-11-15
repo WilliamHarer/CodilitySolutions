@@ -1,0 +1,15 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A, K):
+    # Implement your solution here
+    # should be a modulus based problem?
+    # time efficient, space naive approach: create a new array of size M, populate array with given
+    # array values, i, plus the rotational distance K, mod total length: M
+    b = A.copy()
+    for nId,num in enumerate(A):
+        newId=(nId+K)
+        newId=newId%(len(A))
+        b[newId]=num
+    return b
+    pass
