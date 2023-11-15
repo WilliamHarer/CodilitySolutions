@@ -1,0 +1,20 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(N):
+    # Implement your solution here
+    #convert to binary
+    #iterate through
+    #track largest consecutive gap
+    binN=format(N,'b')
+    longest=0
+    current=0
+    for digit in binN:
+        if digit is '0':
+            current+=1
+        else:
+            if current>=longest:
+                longest=current
+            current=0
+    return longest
+    pass
