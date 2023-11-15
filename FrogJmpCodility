@@ -1,0 +1,16 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(X, Y, D):
+    # Implement your solution here
+    # seems like a simple math solution, (y-x)/d rounded up=jumps special case: x=y
+    # alt solutions: use recursion
+    if X == Y:
+        return 0
+    distance=Y-X
+    jumps=int(distance/D)
+    # now to take care of floating point issues, use modulo?
+    if distance % D != 0:
+        jumps+=1
+    return jumps
+    pass
