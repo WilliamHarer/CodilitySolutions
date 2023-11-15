@@ -1,0 +1,21 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A):
+    # Implement your solution here
+    # len(A) = number of elements
+    # simple solution: for loop for 1-n elements, utilize a map for collisions
+    # return key with 0 collisions
+    # edge case: if empty array, answer is 1
+    OccMap={}
+    # more pythonic way of doing this for loop
+    if A == []:
+        return 1
+    for val in range(1,len(A)+2):
+        OccMap[val]=0
+    for num in A:
+        OccMap[num]=1
+    for key in OccMap:
+        if OccMap[key] == 0:
+            return key
+    pass
