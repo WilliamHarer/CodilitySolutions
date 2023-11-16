@@ -1,0 +1,39 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(N, A):
+    # Implement your solution here
+    # create a map for all counters
+    # map unneccessary array gives O(1) lookup time anyway
+    # as you get counter commands increase count
+    # keep track of the max seen ammount
+    # if a setMax command is found set a lastMax variable
+    # when looking at commands compare value to last Max, if lastMax larger do lastMax+1
+    # order of OPS
+    # look at command, if increment do increment loop, if max, set last max using a counter
+    # increment loop: if val<lastMax, increment lastMax+1
+    # if increment >= lastMax, increment+1
+    # check if new val greater than maxVal if it is update maxVal
+    
+
+    #bookKeeping
+    lastMax=0
+    maxVal=0
+    counters=[0]*N
+    for num in A:
+        if num > N:
+            lastMax=maxVal
+        else:
+            if counters[num-1]<lastMax:
+                counters[num-1]=lastMax+1
+            else:
+                counters[num-1]+=1
+            if counters[num-1]>maxVal:
+                maxVal=counters[num-1]
+    # in case there are buckets that are not revisited since last setMax command re-loop array and set
+    # min's to lastMax
+    for index,num in enumerate(counters):
+        if counters[index]<lastMax:
+            counters[index]=lastMax
+    return counters
+    pass
