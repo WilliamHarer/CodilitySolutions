@@ -1,0 +1,38 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A, B):
+    # Implement your solution here
+    # key book-keeping, fish only meet IF:
+    # 1) P<Q ie A[P]-> A[Q]
+    # 2) AND B[P]=1, and B[Q]=0
+    # any 0's seen before a 1 on the B array are safe and not counted
+    # so keep track of the 1's using a stack
+    # Stack Logic: if we see a 0 and the stack is empty, living fish+=1
+    # if we see a 0 and the stack is not empty 2 cases:
+    # if size of fish in stack is larger than 0 fish, continue on
+    # if size of 0 fish is larger than fish in stack->
+    # while stack is not empty, pop fish compare to size of 0 fish, and either the 0 fish eats them all
+    # in which case increment stack, otherwise continue down the fish list
+    # if we see a 1, push it's index onto the stack to track size
+    fishStack=[]
+    count=0
+    for index,num in enumerate(B):
+        if num == 0:
+            if fishStack == []:
+                count+=1
+            else:
+                # All elements are unique, we do not care about same size fish
+                while(fishStack != []):
+                    if A[fishStack[-1]]>A[index]:
+                        break
+                    else:
+                        fishStack.pop()
+                #check if all the fishStack was eaten
+                if fishStack == []:
+                    count+=1
+        if num == 1:
+            fishStack.append(index)
+    count+=len(fishStack)
+    return count
+    pass
