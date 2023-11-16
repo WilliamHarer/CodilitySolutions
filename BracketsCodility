@@ -1,0 +1,35 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(S):
+    # Implement your solution here
+    # algo: read S from left to right, when the left hand ({[ appears, push it onto a stack
+    # when an )}] appears, if it corresponds to the top of the stack, pop the stack
+    # if it does not correspond to the top of the stack, return non nested
+    # if you complete the string and the stack is empty, return 1
+    # else return 0
+    if S == []:
+        return 1
+    stack=[]
+    for char in S:
+        if char =='{' or char == '[' or char =='(' :
+            stack.append(char)
+        if char == '}':
+            if stack != [] and stack[-1]=='{':
+                stack.pop()
+            else:
+                return 0
+        if char == ']':
+            if stack != [] and stack[-1] =='[':
+                stack.pop()
+            else:
+                return 0
+        if char == ')':
+            if stack != [] and stack[-1] == '(':
+                stack.pop()
+            else:
+                return 0
+    if stack == []:
+        return 1
+    return 0
+    pass
