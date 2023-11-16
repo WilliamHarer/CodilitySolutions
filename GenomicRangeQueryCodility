@@ -1,0 +1,46 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(S, P, Q):
+    # Implement your solution here
+    # keep track of nearest index of each letter through a prefix sum
+    # since we care about minimum impact only 3 letters are tracked
+    # if none of the conditions for the other minimums are reached, we know the largest letter is the min
+    # set to -1, as 0 is a valid index of an array
+    A=[-1]*(len(S)+1)
+    C=[-1]*(len(S)+1)
+    G=[-1]*(len(S)+1)
+    for index,char in enumerate(list(S)):
+        if char == 'A':
+            A[index+1]=index
+        if char == 'C':
+            C[index+1]=index
+        if char == 'G':
+            G[index+1]=index
+    # prefix sum the arrays
+    def PSum(LocationList):
+        minimum=-1
+        for index,val in enumerate(LocationList):
+            if val<minimum:
+                LocationList[index]=minimum
+            if val >= minimum:
+                minimum=val
+        return LocationList
+    A=PSum(A)
+    C=PSum(C)
+    G=PSum(G)
+    # now check for minimums: A[Q]=lower bound index for A
+    impactList=[4]*len(P)
+    impactMin=4
+    # Q[index]+1 = index in Garray, +1 for the above len(S)+1
+    for index,num in enumerate(P):
+        if G[Q[index]+1]>=num:
+            impactMin=3
+        if C[Q[index]+1]>=num:
+            impactMin=2
+        if A[Q[index]+1]>=num:
+            impactMin=1
+        impactList[index]=impactMin
+        impactMin=4
+    return impactList
+    pass
