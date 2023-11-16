@@ -1,0 +1,27 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(X, A):
+    # Implement your solution here
+    # make a map of all positions in river
+    # set all key:values to key:None
+    # when a key is found, set the first time that key is found as the value IE
+    # leaf 5 falls at second 2, dict[5]=2
+    # iterate through the map at the end
+    # largest value in map is the shortest time
+    # if any values are still None, return -1, frog is never able
+
+    leafMap={}
+    for i in range(1,X+1):
+        leafMap[i]=None
+    for index,num in enumerate(A):
+        if num<=X and leafMap[num] == None:
+            leafMap[num] = index
+    minimum=0
+    for key in leafMap:
+        if leafMap[key] == None:
+            return -1
+        if leafMap[key]>minimum:
+            minimum=leafMap[key]
+    return minimum
+    pass
