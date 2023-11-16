@@ -1,0 +1,19 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A):
+    #including negatives within the range makes it difficult to create a solid math based algo
+    # we should be able to just iterate through in O(N) without having to do anything special
+    # use a min to book keep as we move from left to right
+    # set initial conditions
+    left=A[0]
+    right=sum(A[1::])
+    absDiff=abs(left-right)
+    for ind in range(1,len(A)-1):
+        left+=A[ind]
+        right-=A[ind]
+        currDiff=abs(left-right)
+        if(currDiff<absDiff):
+            absDiff=currDiff
+    return absDiff
+    pass
