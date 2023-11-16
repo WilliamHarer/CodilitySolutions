@@ -1,0 +1,18 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A):
+    # no N or range is given to us, as such we must first sort A
+    # so 1 sort A
+    # 2) iterate through A, and have a placeholder with us like A[1]
+    # as we iterate through if A[i+1] does not equal A[i]+1, fail the array return 0
+    # if loop ends return 1
+    A.sort()
+    tracker=1
+    for num in A:
+        if num == tracker:
+            tracker+=1
+        else:
+            return 0
+    return 1
+    pass
