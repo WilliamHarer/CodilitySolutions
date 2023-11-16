@@ -1,0 +1,17 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+def solution(A):
+    #I made the problem harder than it needed to be:
+    #1 create a tracker: 1
+    #2 sort the list
+    #3 iterate through the list
+    #4 when you see a number equal to the tracker increment the tracker
+    if A == []:
+        return 1
+    tracker=1
+    A.sort()
+    for num in A:
+        if tracker == num:
+            tracker+=1
+    return tracker
+    pass
