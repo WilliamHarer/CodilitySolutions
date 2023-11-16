@@ -1,0 +1,24 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A):
+    # Implement your solution here
+    # create a prefix sum array
+    # for each 0 in parent array
+    # subtract the maximum value by the value of the corresponding index in the sum array
+    # add the total of these
+    # total # of passing cars
+    if len(A)==1:
+        return 0
+    P = [0] * (len(A)+1)
+    for index,num in enumerate(A):
+        P[index+1]=P[index]+num
+    maxCars=P[-1]
+    totalCars=0
+    for index,num in enumerate(A):
+        if num==0:
+            totalCars+=(maxCars-P[index+1])
+    if totalCars>1000000000:
+        return -1
+    return totalCars
+    pass
