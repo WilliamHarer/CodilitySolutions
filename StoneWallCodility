@@ -1,0 +1,33 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(H):
+    # Implement your solution here
+
+    # algorithm: go through the array left to right
+    # when a number larger than current top of stack number appears add to stack
+    # when a number equal to current top of stack number appears continue on
+    # move forward
+    # when a number less than current top of stack appears:
+    # drop from stack while num<top of stack
+    # add count +1 for the number itself not being stored in stack
+    # continue
+    stack=[]
+    count=0
+    for num in H:
+        if stack == []:
+            stack.append(num)
+            continue
+        if stack != [] and stack[-1] == num:
+            continue
+        if stack !=[] and (num < stack[-1]):
+            while stack != [] and stack[-1]>num:
+                stack.pop()
+                count+=1
+            if stack == [] or stack[-1]< num:
+                stack.append(num)
+            continue
+        if stack != [] and num > stack[-1]:
+            stack.append(num)
+    return count + len(stack)
+    pass
