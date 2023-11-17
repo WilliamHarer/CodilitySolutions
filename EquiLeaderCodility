@@ -1,0 +1,51 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A):
+    # Implement your solution here
+    # Initially found O(N^2) solution, but was not efficient enough
+    # this is my second attempt
+    # Reuse the dominator question algorithm, the leader algorithm
+    # find 2 key peices of information: the leader and the number of times there is a leader
+    # the number of times a leader occurs MaxLeader, allows us to comput substrings in less than O(N^2)
+    # example: with the 2 sets [4] and [3,4,4,4,2]
+    # set 1 has len 1, set 2 has len 5 
+    # and we know maxLeader is 4, so left set contains 1 4, maxLeader-1 =3 , all 3 remaining 4's
+    # are in set 2, dividing by total size is 5/2= 2.5, 3>5 therefor it also is a leader in set 2
+    # using this we can create an algorithm
+    # given maxLeader and the leader val we iterate through the list
+    # if the given value is a leader we move one leader from right(maxLeader) to left: left+=1, right-=1
+    # we then check left size/2 against the left count, and right size/2 against right count
+    # if the given value is not the leader we do the above check without moving one leader
+    # we initialize with 0 leaders, and if a leader is not in the total set, an equileader does not exist
+    value = None
+    size = 0
+    for num in A:
+        if size == 0:
+            size+=1
+            value = num
+        else:
+            if value != num:
+                size-=1
+            else:
+                size+=1
+    counter=0
+    if size>0:
+        for index,num in enumerate(A):
+            if num == value:
+                counter+=1
+    if counter > int(len(A)/2):
+        maxLeader=counter
+    else:
+        return 0
+    left=0
+    right=maxLeader
+    equiCount=0
+    for index,num in enumerate(A):
+        if num == value:
+            left+=1
+            right-=1
+        if left>((index+1)/2) and right>((len(A)-(index+1))/2):
+            equiCount+=1
+    return equiCount
+    pass
