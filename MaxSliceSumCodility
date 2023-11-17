@@ -1,0 +1,19 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+#Notes: initially just implemented the max_slice algorithm, but it failed me due to cases where negative values were the maximul slice?
+# the problem does state that 0<=P<=Q<N so I think the test cases are wrong, and this algorithm is technically incorrect
+# IE isn't A[0:0] within the set 0<=0<=0<N ? in that case the slice =[] and the max sum is 0, so rather than use A[0] it should just be the max_slice algorithm.
+def solution(A):
+    # Implement your solution here
+    # empty slice not allowed as a solution
+    # slice includes negative value
+    # this changes the maxSlice algorithm to change the base case from 0 to A[0], and the comparison case
+    # from max(0,current+a) to max(a,current+a)
+    max_ending = max_slice = A[0]
+    for index,num in enumerate(A):
+        if index==0:
+            continue
+        max_ending=max(num, max_ending+num)
+        max_slice=max(max_slice, max_ending)
+    return max_slice
+    pass
