@@ -1,0 +1,19 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(N):
+    # Implement your solution here
+    # a number has divisors such that one can be greater than sqrt(n) and one can be lower than sqrt(n)
+    # as such we can look at each possible divisor as i*i<n and if n is divisible by i then we have 2 
+    # divisors to count
+    # if n is of the form k*k=n, then we must also check that n/sqrt(n) is a divisor and if it is increase
+    # divisors by 1
+    i=1
+    count=0
+    while i*i<=N:
+        if i*i<N and N % i == 0:
+            count+=2
+        if i*i==N:
+            count+=1
+        i+=1
+    return
