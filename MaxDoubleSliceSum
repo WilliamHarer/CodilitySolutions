@@ -1,0 +1,32 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A):
+    # Implement your solution here
+    # slice is non inclusive so A[-1] and A[0] not included in possible slices
+    # empty slice is always acceptable so minimum possible val is 0
+    # we want to keep track of positions of max possible Slice at i summing from left to right
+    # (x->y)
+    # and right to left (y->z) in two separate arrays
+    max_starting=[0]*len(A)
+    max_ending=[0]*len(A)
+    for i,num in enumerate(A):
+        if i==0:
+            continue
+        max_ending[i]=max(0,max_ending[i-1]+num)
+    #now do the same in reverse
+    # normally I avoid ranges in python, but to keep it easier to keep track of the location
+    # in max_starting I will use a range here
+    for i in range((len(A)-2),1,-1):
+        max_starting[i]=max(0,max_starting[i+1]+A[i])
+    # now we have the max values of left, and max values to right
+    # we simply need to find the max of those where a pivot Y is the central point
+    max_dbl_slice=0
+    for i,num in enumerate(A):
+        if i==0:
+            continue
+        if i==(len(A)-1):
+            continue
+        max_dbl_slice=max(max_dbl_slice,max_ending[i-1]+max_starting[i+1])
+    return max_dbl_slice
+    pass
