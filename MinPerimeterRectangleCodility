@@ -1,0 +1,25 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(N):
+    # Implement your solution here
+    # algorithm is given in the question
+    # 1 find composite numbers of the area (side lengths)
+    # iterate through the list of composite numbers and keep track of the minimum calc
+    # 2*(A+B)
+    i=1
+    perimeters=[]
+    while i*i<=N:
+        if i*i<N and N%i==0:
+            # now we store the values of composites
+            perimeters.append(2*(i+int(N/i)))
+        if i*i==N and N%i==0:
+            # 2*(i+i)
+            # 2*(2i)
+            # 4*i
+            perimeters.append(4*i)
+        i+=1
+    # small optimizations can probably be made over sorting/storing array if needed
+    perimeters.sort()
+    return perimeters[0]
+    pass
