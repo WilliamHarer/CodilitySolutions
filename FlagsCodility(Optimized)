@@ -1,0 +1,61 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+# this one took me some time to understand
+# I see how they created the array to prevent loops which is a valuable tool for these questions
+# and I see how they created the optimization by reducing the for loops to 1->i flags where i is =<sqrt(N)+1
+# but I need to spend more time practicing calculating and seeing that within these nested for loops
+def solution(A):
+    # Implement your solution here
+    # first find peaks, outside edges cannot be peaks
+    # edge cases
+    if A==[]:
+        return 0
+    N=len(A)
+    if N<3:
+        return 0
+    peaks=[]
+    for i,num in enumerate(A):
+        if i==0:
+            continue
+        if i==N-1:
+            continue
+        if num> A[i-1] and num> A[i+1]:
+            peaks.append(i)
+    # create an array of next mountain based on position
+    # in order to prevent loops we need next_mountain[i]=peaks[x] but next_mountain[i+1]=peaks[x+1]
+    # where peaks[x]==i
+    nextPeaks=[-1]*N
+    currentPeak=len(peaks)-1
+    for i in range(N-2,-1,-1):
+        if currentPeak>=0 and i == peaks[currentPeak]:
+            nextPeaks[i]=peaks[currentPeak]
+            currentPeak-=1
+        else:
+            nextPeaks[i]=nextPeaks[i+1]
+    # now we can calculate flag placements
+    i=1
+    maxFlags=0
+    while ((i-1)*i)<N:
+        position = 0
+        count = 0
+        while position<N-1 and count<i:
+            position=nextPeaks[position]
+            # if there is no more available peaks, end cycle
+            if nextPeaks[position]==-1:
+                break
+            #key part of the algorithm, since at any position nearest peaks can have a value of either
+            # -1, no available peak so end of run
+            # or the position of peak further down the range
+            # or is the position of the peak
+            # we can safely know no loops will occur with position=nextPeaks[position]
+            # additionally either when we step forward we are 1) perfectly placed to put a flag down
+            # showing up too early to put a flag down on the next mountain and pos=nextPeaks[pos] will
+            # move us to the next peak
+            # or we are 2) skipping a peak, this does not matter however as that is essentially a special
+            # circumstance as case 1 and the algorithm works
+            count+=1
+            position+=i
+        maxFlags=max(count,maxFlags)
+        i+=1
+    return maxFlags
+    pass
