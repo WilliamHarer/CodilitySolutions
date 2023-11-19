@@ -1,9 +1,12 @@
 # you can write to stdout for debugging purposes, e.g.
 # print("this is a debug message")
 # this one took me some time to understand
-# I see how they created the array to prevent loops which is a valuable tool for these questions
-# and I see how they created the optimization by reducing the for loops to 1->i flags where i is =<sqrt(N)+1
-# but I need to spend more time practicing calculating and seeing that within these nested for loops
+# seeing the composite solution/distance covered sqrt(N) techique took me time and needs more work
+# additionally there is an edgecase of there being sqrt(N)+1 flags, that took me a while to see
+# the reason this edgecase exists and the -1 is needed @ line 41 is:
+# sqrt's are being treated as integers in the loops, but in reality are mostly floats
+# so the int(sqrt(35)) value is 5, giving us 5 covers of 5 possible, however thats only a distance of 25 allowing for 10 more blocks to have flags placed
+# this gives the sqrt(n)+1 
 def solution(A):
     # Implement your solution here
     # first find peaks, outside edges cannot be peaks
