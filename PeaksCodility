@@ -1,0 +1,60 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A):
+    # Implement your solution here
+    #find peaks
+    N=len(A)
+    if not A:
+        return 0
+    if N<3:
+        return 0
+    peaks=[]
+    for i,num in enumerate(A):
+        if i==0:
+            continue
+        if i==(N-1):
+            continue
+        if num>A[i-1] and num>A[i+1]:
+            peaks.append(i)
+    if not peaks:
+        return 0
+    #create next peaks array
+    next_peaks=[-1]*N
+    current_index=len(peaks)-1
+    current_peak=peaks[-1]
+    for i in range(N-2,-1,-1):
+        if i==current_peak:
+            next_peaks[i]=peaks[current_index]
+            if current_index >0:
+                current_index-=1
+                current_peak=peaks[current_index]
+        else:
+            next_peaks[i]=next_peaks[i+1]
+    # now for the problem statement
+    # known: max blocks = max number of peaks
+    # min blocks: 0
+    # start with large blocks and go down?
+    # given range P,Q a peak can be placed in block P,Q if:
+    # next_peaks[P]>=P next_peaks[P]<=Q
+
+    #if we get to this point we know at least one peak exists, so min blocks is 1
+    def blockCheck(blockSize,next_peaks):
+        P=0
+        Q=P+blockSize-1
+        for i in range(0,int(len(next_peaks)/blockSize)):
+            if next_peaks[P]<P or next_peaks[P]>Q:
+#                if next_peaks[Q]>Q or next_peaks[Q]<P:
+                return False
+            P+=blockSize
+            Q+=blockSize
+        return True
+    maxSize=1
+    for i in range(3,N+1):
+        #now we test for peaks
+        # if N is not divisible by block size we skip
+        if N % i ==0:
+            if blockCheck(i,next_peaks):
+                maxSize=max(maxSize,int(N/i))
+    return maxSize
+    pass
