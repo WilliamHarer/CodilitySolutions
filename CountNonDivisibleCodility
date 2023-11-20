@@ -1,0 +1,75 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+# first attempt: Hit TLE
+def solution(A):
+    # Implement your solution here
+    # we want to make a numerical analysis at each index based on the array as a whole
+    # for easier book keeping lets right away coppy the array
+    B=A
+    #lets sort B to make it a bit easier to work with
+    B=sorted(B)
+    # we now have an array of 1,2,3,3,6
+    # now we could keep track of every prime in here and then simply mark their divisors
+    # as them+themselves?
+    # we could make a set and then iterate through leading to an O(N^2) complexity
+    # we could do the seive, and then instead of only marking the initial prime factor, mark every factor
+    # that would let us know every divisor, but not every non-divisor
+    # we could use that but it won't work because some numbers are duplicates
+    # we need to convert our B array into a set
+    # we also need to map each value to an occurance so that we can keep track of duplicates
+    # for example: 3:2, now if something is non-divisble by 3 it's score is now +2
+    occMap={}
+    for num in B:
+        if num in occMap:
+            occMap[num]+=1
+        else:
+            occMap[num]=1
+    # now we have a solution duplicates
+    # we have a way to track divisors
+    # take the complement of the SET of divisors by the SET of numbers in A?
+    # iterate through that complement and use our map to add up numbers
+    # store that score in a new array and continue through each value doing so
+    # return new array
+
+    # now lets track every divisor within A
+    divisorMap={}
+    B=list(set(B))
+    N=B[-1]
+    #F for factors
+    F=[0]*(N+1)
+    # create a list of factors of numbers between 2-maxNumber in set
+    # list can contain 1's
+    i=1
+    while i<=N:
+        #is prime
+        if F[i]==0:
+            # start moving up the factors
+            k=i
+            while(k<=N):
+                # modify this now to use our divisor map
+                if k in divisorMap:
+                    divisorMap[k].append(i)
+                else:
+                    divisorMap[k]=[i]
+                # count up by i
+                k+=i
+        i+=1
+    
+    # we have a map of all divisors
+    # lets iterate through A and find our solution
+    nonDivList=[]
+    for num in A:
+        # 1 find the non divisors
+        if num == 1:
+            # special case, it will be all values that are not 1
+            # or N -occMap[1]
+            nonDivList.append(len(A)-occMap[1])
+        else:
+            # we take the complement of our divisors with our B Set
+            score=0
+            C=set(B)-set(divisorMap[num])
+            for val in list(C):
+                score+=occMap[val]
+            nonDivList.append(score)
+    return nonDivList
+    pass
