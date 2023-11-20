@@ -1,0 +1,49 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A):
+    # Implement your solution here
+    # the array can contain duplicates so to score keep lets make in occurence map
+    N=len(A)
+    occMap={}
+    for num in A:
+        if num in occMap:
+            occMap[num]+=1
+        else:
+            occMap[num]=1
+    # lets make the divisors array
+    # okay take 2
+    # we iterate through and mark all the divisors storing them in a map?
+    # or increase the score when we find a divisor?
+    # store score first as a constant, best case scenario no number is a divisor so score == N
+    # when we find a divisor subtract the occurances from the total score
+    scoreMap={}
+    score = N
+    B=sorted(A)
+    largestNum=B[-1]
+    B=set(B)
+    # populate map
+    for num in B:
+        scoreMap[num]= score
+    i=2
+    # record score if the number is in the set
+    while i<=largestNum:
+        if i in scoreMap:
+            # mark score
+            scoreMap[i]-=occMap[i]
+            # count up
+            k=i*2
+            while k<=largestNum:
+                if k in scoreMap:
+                    # mark score
+                    scoreMap[k]-=occMap[i]
+                k+=i
+        i+=1
+    if 1 in occMap:
+        for key in scoreMap:
+            scoreMap[key]-=occMap[1]
+    finalScore=[]
+    for num in A:
+        finalScore.append(scoreMap[num])
+    return finalScore
+    pass
