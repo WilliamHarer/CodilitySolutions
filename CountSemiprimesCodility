@@ -1,0 +1,64 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(N, P, Q):
+    if N<4:
+        return [0]
+    # Implement your solution here
+    # Noticing that some of the key conditions is the first time we see a prime, its square
+    # is semi prime
+    # also noticing that semiPrimes do not intersect with prime numbers 4 is semiPrime, 2 is not
+    # so first step would be detecting primes
+    # Idea: seive algorithm, to find prime factors
+    # when you find one prime factor, divide the number by that prime factor, if that value is also prime
+    # then it is a semiPrime
+    # bookKeeping needed: A map of primes for O(1) is_prime look up?
+    # should probably generate prime numbers for the range
+    # is it more efficient to do a regular seive, or just test the prime values against themselves
+    # is the maximum number of primes in a set of N<sqrt(N)? ans: no
+    # is there a way to do this while only looking in between the given subset?
+    # ans: no, you must know if the first in the sequence is prime
+    # so algorithm: 1 create a set of primes between 1 and Q[k]
+    # 2: from P[k]->Q[k] if val is prime: square it and increment by 1
+    # then inner loop to find composite numbers including that prime
+    # if the composite is also prime, increment count
+    # duplicate counts should be fixed by virtue of i*i optimization
+    def findPrimes(N):
+        primeArray=[0]*(N+1)
+        i=2
+        while i*i<=N:
+            if primeArray[i]==0:
+                k=i*i
+                while k<=N:
+                    if primeArray[k]==0:
+                        primeArray[k]=i
+                    k+=i
+            i+=1
+        return primeArray
+    primeArray=findPrimes(N)
+    # okay given our primes, we want to go from p->q range
+    # at each step, if prime square the prime and tally
+    # if not prime, divide by prime factor, and if that value is prime tally
+    # this is much more difficult, would be better to calculate semiprimes from 0-26 and use that
+
+    #find semiPrimes
+    countArray=[0]*(N+1)
+    for i in range(2,N+1):
+        if primeArray[i]==0 and i*i<=N:
+            # we know i*i is semiPrime, lets not double dip
+            countArray[i*i]=1
+            k=((i*i)+i)
+            while k<=N:
+                if primeArray[int(k/i)]==0:
+                    countArray[k]=1
+                    # mark as visited
+                k+=i
+    for i,num in enumerate(countArray):
+        if i<4:
+            continue
+        countArray[i]=countArray[i]+countArray[i-1]
+    returnArray=[]
+    for i,num in enumerate(P):
+        returnArray.append(countArray[Q[i]]-countArray[num-1])
+    return returnArray
+    pass
