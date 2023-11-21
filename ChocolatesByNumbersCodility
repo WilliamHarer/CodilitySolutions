@@ -1,0 +1,10 @@
+
+def solution(N: int, M: int) -> int:
+    def GCD(A,B):
+        if A%B==0:
+            return B
+        else:
+            return GCD(B,A%B)
+    Greatest=GCD(N,M)
+    return int(N/Greatest)
+    pass
