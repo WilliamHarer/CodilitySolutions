@@ -1,0 +1,31 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A, B):
+    # Implement your solution here
+    # if N is a GCD of M, then we just need to check the factors of N/GCD(M,N)
+    # IE: 15 is the GCD of 75,15 
+    # we can then check the prime factors between 15, and 75/15
+    # gcd between 15 and 5 is 5 so we can repeat the process with 15, 5/5 which is 1
+    # this returns true
+    def GCD(A,B):
+        if A%B==0:
+            return B
+        else:
+            return GCD(B,A%B)
+    def checkPrimeFactors(X,Y):
+        if Y==1:
+            return True
+        gcd=GCD(X,Y)
+        if gcd==1:
+            return False
+        return checkPrimeFactors(X,int(Y/gcd))
+    # now we loop through the array and plug in values while keeping track of count
+    count=0
+    # when testing with the array A and B swapped it had a different value
+    # so make sure that it checks both ways before incrementing count
+    for i,num in enumerate(A):
+        if checkPrimeFactors(A[i],B[i]) and checkPrimeFactors(B[i],A[i]):
+            count+=1
+    return count
+    pass
