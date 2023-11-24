@@ -1,0 +1,12 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+# I expect that the caterpillar method is an additional solution, but it seems odd this is specifically in the caterpillar method section
+# theres probably even easier ways to solve this that are still O(N)
+# I may try this again in the future specifically utilizing the caterpillar for practice
+def solution(A):
+    # Implement your solution here
+    for i,num in enumerate(A):
+        A[i]=abs(num)
+    A=set(A)
+    return len(A)
+    pass
