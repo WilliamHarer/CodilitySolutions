@@ -1,0 +1,24 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+#NOTE: this will fail 1 time test:
+# REASON: at large values of fibs[i-1]+fibs[i-2] will reach a value such that fibs[]+fibs[] is an O(i) (length of number) complexity
+# when O(i) is equal to len(A) (which in this case is equivalent to the max possible value given for an ith element of A in this problem)
+# then the fib loop becomes O(i)*O(len(A)) or O(L^2) rather than O(L)
+# the solution is in the problem description, since we're using modular arithmetic on the answ anyway, and B[i] cannot be greater than 30
+# we can sub the offending line with: fibs.append((fibs[i-1]+fibs[i-2])%(int(2**32)))
+# this puts an upper bound, but since we're using modulus with a number lower than 2**32, and both are multiples of eachother (2**) the answer will turn out the same.
+# .... I need to go study modular interactions to brush up on the #%(2**32)%(2**n<32) interaction
+def solution(A, B):
+    # Implement your solution here
+    # special fib:
+    maxHeight=max(A)
+    for i,num in enumerate(B):
+        B[i]=int(2**B[i])
+    fibs=[1,1]
+    for i in range(2,maxHeight+1):
+        fibs.append(fibs[i-1]+fibs[i-2])
+    answ=[]
+    for i,num in enumerate(A):
+        answ.append(fibs[num]%B[i])
+    return answ
+    pass
