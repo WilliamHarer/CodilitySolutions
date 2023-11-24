@@ -1,0 +1,14 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(K, A):
+    # Implement your solution here
+    count=0
+    rope=0
+    for length in A:
+        rope+=length
+        if rope>=K:
+            rope=0
+            count+=1
+    return count
+    pass
