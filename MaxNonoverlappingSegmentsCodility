@@ -1,0 +1,17 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+def solution(A, B):
+    # Implement your solution here
+    if not A:
+        return 0
+    j=0
+    count=1
+    for i,lengths in enumerate(A):
+        if i==0:
+            continue
+        if B[j]<A[i]:
+            count+=1
+            j=i
+    return count
+    pass
