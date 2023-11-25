@@ -1,0 +1,25 @@
+# you can write to stdout for debugging purposes, e.g.
+# print("this is a debug message")
+
+# one of the bigger thorns in my side about this experiment is the inability to see failing testCases
+# If theres an edge case I didn't see or test for and it causes a failure, it would be nice to see what that testcase was so I can learn from my mistakes and find out what went wrong
+# in this case I suspect that because of the clunkiness of the logic of looking at whats in front, (front+1) maybe starting with a basecase of tail is the set, and front is 1 ahead from the start would be easier
+# I have no clue other than that what could cause the failure, it passed everysingle testcase except one, and in that one it had a 50% pass rate, if you see the error in here PLEASE let me know, it's kind of driving me crazy.
+def solution(M, A):
+    # Implement your solution here
+    front=0
+    back=0
+    sliceSet=set({A[front]})
+    count=0
+    while front<len(A):
+        if front+1 == len(A):
+            break
+        while front+1<len(A) and A[front+1] not in sliceSet:
+            front+=1
+            count+=front-back
+            sliceSet.add(A[front])
+        #we contract the back until we can create new sets
+        sliceSet.remove(A[back])
+        back+=1
+    return count+len(A)
+    pass
